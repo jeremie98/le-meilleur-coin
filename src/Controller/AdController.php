@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\Category;
 use App\Form\AdType;
+use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,14 +45,33 @@ class AdController extends AbstractController
     /**
      * @Route("/ad/list", name="list")
      */
-    public function list()
+    public function list(Request $request)
     {
+        //filtre par catégorie
+        $category = new Category();
+        
+
+        $categoryForm = $this->createForm(CategoryType::class, $category);
+        $categoryForm->handleRequest($request);
+
         $adRepository = $this->getDoctrine()->getRepository(Ad::class);
 
-        $ads = $adRepository->findAll();
+        $ads = $adRepository->findLastAds();
+
+        if($categoryForm->isSubmitted()){
+
+            $ads = $adRepository->findBy(
+                [
+                    'category' => $category
+                ],
+                ['dateCreated' => 'DESC'],
+                30
+            );
+        }
 
         return $this->render('ad/ad-list.html.twig', [
             "ads" => $ads,
+            "categoryForm" => $categoryForm->createView()
         ]);
     }
 

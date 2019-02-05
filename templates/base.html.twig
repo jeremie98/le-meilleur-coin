@@ -7,12 +7,16 @@
     </head>
     <body>
         <header>
-            <nav id="title" class="col-sm-6">
-                <a href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" width="50" height="50"></a>
-                <h1>Le Meilleur Coin</h1>
+            <nav id="main-nav" class="col-sm-6">
+                <div id="title">
+                    <a href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" width="70" height="70"></a>
+                    <h1>Le Meilleur Coin</h1>
+                </div>
+
                 <div id="menu">
                     <a href="{{ path('ad') }}">Déposer une annonce</a>
                     <a href="{{ path('list') }}">Liste des annonces</a>
+                    <a href="{{ path('register') }}">Inscription</a>
                 </div>
             </nav>
         </header>

@@ -3,6 +3,18 @@
 {% block content %}
     <h1>Listes des annonces</h1>
 
+    <div id="order_by">
+        {{ form_start(categoryForm, {
+            'attr':{
+                'novalidate': 'novalidate'
+            }
+        }) }}
+        {{ form_widget(categoryForm) }}
+            <button class="btn btn-primary">Trier</button>
+        {{ form_end(categoryForm) }}
+    </div>
+
+
     {% for ad in ads %}
         <div id="une_ad">
             <p>

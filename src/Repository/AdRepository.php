@@ -19,6 +19,19 @@ class AdRepository extends ServiceEntityRepository
         parent::__construct($registry, Ad::class);
     }
 
+    public function findLastAds()
+    {
+        $dql = "SELECT a
+                FROM App\Entity\Ad a
+                ORDER BY a.dateCreated DESC";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+
+        $ads = $query->getResult();
+
+        return $ads;
+    }
+
     // /**
     //  * @return Ad[] Returns an array of Ad objects
     //  */

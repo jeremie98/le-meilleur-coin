@@ -20,17 +20,29 @@ footer{
 footer a{
     margin: 150px;
 }
-#title{
+#main-nav{
     background-color: deepskyblue;
     color: orange;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 #menu{
-    float: right;
+    font-size: 18px;
+}
+#menu a{
+    margin: 10px;
+    font-weight: bold;
+}
+#title{
+    display: flex;
+    flex-direction: row;
 }
 #une_ad{
    padding: 3em;
+}
+#order_by{
+    margin-left: 3em;
 }
 #une_ad a{
     color: orange;
