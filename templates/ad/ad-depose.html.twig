@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Déposer une annonce</h1>
+
+    {{ form_start(adForm, {
+        'attr':{
+            'novalidate': 'novalidate'
+        }
+    }) }}
+    {{ form_widget(adForm) }}
+    <button class="btn btn-success">Publier l'annonce</button>
+    {{ form_end(adForm) }}
+
+{% endblock %}
+
+{% block title %}Le Meilleur Coin | Dépôt Annonce{% endblock %}

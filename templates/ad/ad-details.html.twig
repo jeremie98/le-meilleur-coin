@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Détails de {{ ad.title }} </h1>
+
+    <div id="ad_detail">
+        <b>Description : </b>{{ ad.description}}<br>
+        <b>Ville : </b>{{ ad.city }}<br>
+        <b>Code postal : </b>{{ ad.zip }}<br>
+        <b>Annonce publiée le : </b>{{ ad.dateCreated|date('d-m-Y') }} à {{ ad.dateCreated|date('H:i') }}<br>
+        <b>Prix : </b>{{ ad.price }}€<br>
+    </div>
+
+
+{% endblock %}
+
+{% block title %}{{ ad.title }}{% endblock %}

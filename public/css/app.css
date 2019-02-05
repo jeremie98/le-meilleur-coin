@@ -1,0 +1,45 @@
+html{
+    height: 100%;
+}
+body{
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #005cbf;
+    color: white;
+}
+footer a{
+    margin: 150px;
+}
+#title{
+    background-color: deepskyblue;
+    color: orange;
+    display: flex;
+    flex-direction: row;
+}
+#menu{
+    float: right;
+}
+#une_ad{
+   padding: 3em;
+}
+#une_ad a{
+    color: orange;
+}
+#ad_detail{
+    padding: 3em;
+}
+body a, a:visited{
+    text-decoration: none;
+    color:white;
+}
+* {-moz-box-sizing: border-box; box-sizing: border-box;}
