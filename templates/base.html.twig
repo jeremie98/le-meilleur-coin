@@ -14,9 +14,17 @@
                 </div>
 
                 <div id="menu">
-                    <a href="{{ path('ad') }}">Déposer une annonce</a>
                     <a href="{{ path('list') }}">Liste des annonces</a>
-                    <a href="{{ path('register') }}">Inscription</a>
+                    {% if not is_granted('ROLE_USER') %}
+                        <a href="{{ path('register') }}">Inscription</a>
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER')%}
+                        <a href="{{ path('ad') }}">Déposer une annonce</a>
+                        <a href="{{ path('myads') }}">Mes annonces</a>
+                        <a href="{{ path('myfavads') }}">Mes favoris</a>
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% endif %}
                 </div>
             </nav>
         </header>

@@ -4,11 +4,18 @@
     <h1>Détails de {{ ad.title }} </h1>
 
     <div id="ad_detail">
+        <b>Type : </b>{{ ad.category }}<br>
         <b>Description : </b>{{ ad.description}}<br>
         <b>Ville : </b>{{ ad.city }}<br>
         <b>Code postal : </b>{{ ad.zip }}<br>
         <b>Annonce publiée le : </b>{{ ad.dateCreated|date('d-m-Y') }} à {{ ad.dateCreated|date('H:i') }}<br>
         <b>Prix : </b>{{ ad.price }}€<br>
+
+        <!-- Bouton "Ajouter à mes favoris-->
+        <form id="mesfavoris" method="post">
+            <input name="ad_id" type="hidden" value="{{ ad.id }}">
+            <button>Ajouter à mes favoris</button>
+        </form>
     </div>
 
 

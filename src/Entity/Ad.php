@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,6 +17,7 @@ class Ad
     public function __construct()
     {
         $this->setDateCreated(new \DateTime());
+        $this->fav_users = new ArrayCollection();
     }
 
     /**
@@ -46,7 +49,8 @@ class Ad
      */
     private $description;
 
-    /** @Assert\NotBlank(message = "Veuillez renseigner une ville !")
+    /**
+     * @Assert\NotBlank(message = "Veuillez renseigner une ville !")
      * @Assert\Length(min="2",
      *     max="70",
      *     minMessage="2 caractères minimum !",
@@ -83,6 +87,17 @@ class Ad
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ads")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="fav_ads")
+     */
+    private $fav_users;
 
     public function getId(): ?int
     {
@@ -169,6 +184,46 @@ class Ad
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFavUsers(): Collection
+    {
+        return $this->fav_users;
+    }
+
+    public function addFavUser(User $favUser): self
+    {
+        if (!$this->fav_users->contains($favUser)) {
+            $this->fav_users[] = $favUser;
+            $favUser->addFavAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavUser(User $favUser): self
+    {
+        if ($this->fav_users->contains($favUser)) {
+            $this->fav_users->removeElement($favUser);
+            $favUser->removeFavAd($this);
+        }
 
         return $this;
     }

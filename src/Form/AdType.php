@@ -17,12 +17,23 @@ class AdType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('city', TextType::class)
-            ->add('zip', IntegerType::class)
-            ->add('price', IntegerType::class)
+            ->add('title', TextType::class, [
+                'label' => "Titre : "
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => "Description : "
+            ])
+            ->add('city', TextType::class, [
+                'label' => "Ville : "
+            ])
+            ->add('zip', IntegerType::class, [
+                'label' => "Code postal : "
+            ])
+            ->add('price', IntegerType::class, [
+                'label' => "Prix : "
+            ])
             ->add('category', EntityType::class, [
+                'label' => "Catégorie : ",
                 'class' => Category::class,
                 'multiple' => false,
                 'expanded' => false,

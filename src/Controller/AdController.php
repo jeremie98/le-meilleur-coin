@@ -22,6 +22,8 @@ class AdController extends AbstractController
         $adForm->handleRequest($request);
 
         if($adForm->isSubmitted() && $adForm->isValid()){
+            // récupération de l'utilisateur
+            $ad->setUser($this->getUser());
 
             // récupère l'entity manager de Doctrine
             $em = $this->getDoctrine()->getManager();
@@ -43,26 +45,56 @@ class AdController extends AbstractController
     }
 
     /**
+     * @Route("/ad/my-ads", name="myads")
+     */
+    public function myAds()
+    {
+        $adRepository = $this->getDoctrine()->getRepository(Ad::class);
+
+        $myads = $adRepository->findBy([
+           'user' => $this->getUser()
+        ]);
+
+        return $this->render('ad/my-ads.html.twig', [
+            "myads" => $myads,
+        ]);
+    }
+
+    /**
+     * @Route("ad/my-favads", name="myfavads")
+     */
+    public function myFavoritesAds()
+    {
+        return $this->render('ad/my-favads.html.twig', [
+            "myfavads" => null
+        ]);
+    }
+
+    /**
      * @Route("/ad/list", name="list")
      */
     public function list(Request $request)
     {
         //filtre par catégorie
         $category = new Category();
-        
 
         $categoryForm = $this->createForm(CategoryType::class, $category);
         $categoryForm->handleRequest($request);
 
         $adRepository = $this->getDoctrine()->getRepository(Ad::class);
+        $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
 
         $ads = $adRepository->findLastAds();
 
         if($categoryForm->isSubmitted()){
+            // récupération de l'objet en base de données grâce à son label
+            $categoryPick = $categoryRepository->findOneBy([
+                'label' => $category->getLabel()
+            ]);
 
             $ads = $adRepository->findBy(
                 [
-                    'category' => $category
+                    'category' => $categoryPick
                 ],
                 ['dateCreated' => 'DESC'],
                 30
@@ -87,6 +119,9 @@ class AdController extends AbstractController
         if(!$ad){
             throw $this->createNotFoundException("Cette annonce n'existe pas !");
         }
+
+        $adFavForm = $this
+
 
         return $this->render('ad/ad-details.html.twig', [
             'ad' => $ad

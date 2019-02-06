@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Mes favoris</h1>
+
+    {% for ad in myfavads %}
+        <div id="une_ad">
+            <p>
+                <b>Titre : <a href="{{ path('details', {'id': ad.id}) }}">{{ ad.title }}</a> </b><br>
+                <b>Ville : </b>{{ ad.city }}<br>
+                <b>Prix : </b>{{ ad.price }}€<br>
+            </p>
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}
+
+{% block title %}Le Meilleur Coin | Mes favoris{% endblock %}
