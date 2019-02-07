@@ -10,12 +10,15 @@
         <b>Code postal : </b>{{ ad.zip }}<br>
         <b>Annonce publiée le : </b>{{ ad.dateCreated|date('d-m-Y') }} à {{ ad.dateCreated|date('H:i') }}<br>
         <b>Prix : </b>{{ ad.price }}€<br>
+        <b>Vendeur : </b>{{ ad.user }}<br>
 
-        <!-- Bouton "Ajouter à mes favoris-->
-        <form id="mesfavoris" method="post">
-            <input name="ad_id" type="hidden" value="{{ ad.id }}">
-            <button>Ajouter à mes favoris</button>
-        </form>
+        {% if is_granted('ROLE_USER')%}
+            <!-- Bouton "Ajouter à mes favoris-->
+            <form id="addfavoris" method="post" action="{{ path('addFav') }}">
+                <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                <button>Ajouter à mes favoris</button>
+            </form>
+        {% endif %}
     </div>
 
 

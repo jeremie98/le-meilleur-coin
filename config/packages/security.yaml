@@ -36,7 +36,7 @@ security:
     access_control:
 
         - { path: ^/(inscription|connexion)$, allow_if: "not is_granted('ROLE_USER')" }
-        - { path: ^/(ad/depose)$, allow_if: "is_granted('ROLE_USER')" }
+        - { path: ^/(ad/depose|home|ad/my-ads|ad/my-favads)$, allow_if: "is_granted('ROLE_USER')" }
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

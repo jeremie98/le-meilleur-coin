@@ -9,7 +9,11 @@
         <header>
             <nav id="main-nav" class="col-sm-6">
                 <div id="title">
-                    <a href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" width="70" height="70"></a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" width="70" height="70"></a>
+                    {% else %}
+                        <a href="{{ path('list') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" width="70" height="70"></a>
+                    {% endif %}
                     <h1>Le Meilleur Coin</h1>
                 </div>
 

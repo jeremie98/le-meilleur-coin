@@ -65,13 +65,18 @@ class AdController extends AbstractController
      */
     public function myFavoritesAds()
     {
+        $myFavAds = $this->getUser()->getFavAds();
+
+        // suppression annonce dans "Mes favoris"
+
+
         return $this->render('ad/my-favads.html.twig', [
-            "myfavads" => null
+            "myfavads" => $myFavAds
         ]);
     }
 
     /**
-     * @Route("/ad/list", name="list")
+     * @Route("ad/list", name="list")
      */
     public function list(Request $request)
     {
@@ -108,20 +113,57 @@ class AdController extends AbstractController
     }
 
     /**
+     * @Route("/ad/addFav", name="addFav")
+     */
+    public function addFav(Request $request){
+        // récupération de l'annonce
+        $adRepository = $this->getDoctrine()->getRepository(Ad::class);
+        $ad = $adRepository->find($request->request->get('ad_id'));
+
+        // traitement bouton "Ajouter à mes favoris"
+        // ajout dans la liste de l'utilisateur
+        $this->getUser()->addFavAd($ad);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($ad);
+        $em->flush();
+
+        return $this->render('ad/ad-details.html.twig', [
+            'ad' => $ad
+        ]);
+    }
+
+    /**
+     * @Route("/ad/remFav", name="remFav")
+     */
+    public function remFav(Request $request){
+        // récupération de l'annonce
+        $adRepository = $this->getDoctrine()->getRepository(Ad::class);
+        $ad = $adRepository->find($request->request->get('ad_id'));
+
+        // traitement bouton "Retirer de mes favoris"
+        // suppression dans la liste de l'utilisateur
+        $this->getUser()->removeAd($ad);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('myfavads');
+    }
+
+    /**
      * @Route("/ad/details/{id}", name="details", requirements={"id": "\d+"},
      *     methods={"GET"}
      *     )
      */
     public function details(int $id){
+
         // récupération de l'annonce en base
         $adRepository = $this->getDoctrine()->getRepository(Ad::class);
         $ad = $adRepository->find($id);
         if(!$ad){
             throw $this->createNotFoundException("Cette annonce n'existe pas !");
         }
-
-        $adFavForm = $this
-
 
         return $this->render('ad/ad-details.html.twig', [
             'ad' => $ad

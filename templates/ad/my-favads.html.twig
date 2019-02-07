@@ -9,6 +9,12 @@
                 <b>Titre : <a href="{{ path('details', {'id': ad.id}) }}">{{ ad.title }}</a> </b><br>
                 <b>Ville : </b>{{ ad.city }}<br>
                 <b>Prix : </b>{{ ad.price }}€<br>
+
+                <!-- Bouton "Retirer de mes favoris-->
+                <form id="removfavoris" method="post" action="{{ path('remFav') }}">
+                    <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                <button>Retirer de mes favoris</button>
+            </form>
             </p>
         </div>
 
