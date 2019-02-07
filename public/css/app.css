@@ -40,6 +40,11 @@ footer a{
 }
 #une_ad{
    padding: 3em;
+    width: 30%;
+    height: auto;
+    margin-left: 20%;
+    margin-bottom: 10px;
+    background-color: deepskyblue;
 }
 #order_by{
     margin-left: 3em;
@@ -49,6 +54,9 @@ footer a{
 }
 #ad_detail{
     padding: 3em;
+    width: 70%;
+    margin-left: 10%;
+    border: 2em solid deepskyblue;
 }
 body a, a:visited{
     text-decoration: none;
